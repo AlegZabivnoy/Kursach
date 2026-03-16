@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FinanceFlow</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1 data-key="title">FinanceFlow</h1>
+        <p class="subtitle" data-key="subtitle">Smart expense tracking</p>
+    </header>
+
+    <div class="balance-card">
+        <p><span data-key="total">Total balance</span>: <span id="total-amount">0</span> UAH</p>
+    </div>
+
+    <div class="input-section">
+        <input type="text" id="item-name" placeholder="Enter item name" data-key="input-name">
+        <input type="number" id="item-price" placeholder="Enter item price" data-key="input-price">
+        <button id="add-item" data-key="add-item">Add item</button>
+    </div>
+
+    <ul id="expense-list">
+
+    </ul>
+</div>
+<script src="script.js"></script>
+
+</body>
+</html>

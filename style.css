@@ -1,0 +1,87 @@
+:root {
+    --bg-color: #272727;
+    --card-bg: #2f2f2f;
+    --accent-color: #9ec5e6;
+    --text-main: #f0f0f0;
+    --text-secondary: #8a8a8a;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 40px;
+}
+
+.app-container {
+    width: 90%;
+    max-width: 450px;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+h1 { margin: 0; font-size: 28px; color: var(--accent-color); }
+.subtitle { color: var(--text-secondary); margin-bottom: 30px; }
+
+.balance-card {
+    background: rgba(56, 189, 248, 0.1);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#total-amount { font-weight: bold; font-size: 24px; }
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input {
+    background: #0f172a;
+    border: 1px solid #334155;
+    padding: 14px;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+}
+
+input:focus { outline: 2px solid var(--accent-color); border-color: transparent; }
+
+button {
+    background: var(--accent-color);
+    color: #0f172a;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:active { transform: scale(0.98); }
+
+ul { list-style: none; padding: 0; margin-top: 30px; }
+
+li {
+    background: #334155;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
