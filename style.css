@@ -1,45 +1,52 @@
 :root {
     --bg-color: #272727;
     --card-bg: #2f2f2f;
+    --input-bg: #1e1e1e;
     --accent-color: #9ec5e6;
     --text-main: #f0f0f0;
     --text-secondary: #8a8a8a;
+    --border-color: #3a3a3a;
+    --danger-color: #ff6b6b;
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
     margin: 0;
-    padding-top: 40px;
+    padding-top: 60px;
 }
 
 .app-container {
     width: 90%;
-    max-width: 450px;
+    max-width: 420px;
     background: var(--card-bg);
-    padding: 30px;
-    border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    padding: 35px;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
 }
 
-h1 { margin: 0; font-size: 28px; color: var(--accent-color); }
-.subtitle { color: var(--text-secondary); margin-bottom: 30px; }
+h1 { margin: 0; font-size: 26px; color: var(--text-main); font-weight: 600; }
+.subtitle { color: var(--text-secondary); margin: 5px 0 30px 0; font-size: 14px; }
 
 .balance-card {
-    background: rgba(56, 189, 248, 0.1);
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    background: var(--input-bg);
+    padding: 24px;
+    border-radius: 18px;
+    border: 1px solid var(--border-color);
     margin-bottom: 25px;
     text-align: center;
 }
 
-#total-amount { font-weight: bold; font-size: 24px; }
+#total-amount {
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--accent-color);
+}
 
 .input-section {
     display: flex;
@@ -48,40 +55,99 @@ h1 { margin: 0; font-size: 28px; color: var(--accent-color); }
 }
 
 input {
-    background: #0f172a;
-    border: 1px solid #334155;
-    padding: 14px;
-    border-radius: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 14px;
     color: white;
     font-size: 16px;
+    transition: border-color 0.2s;
 }
 
-input:focus { outline: 2px solid var(--accent-color); border-color: transparent; }
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
 
-button {
+button#add-item {
     background: var(--accent-color);
-    color: #0f172a;
+    color: var(--bg-color);
     border: none;
-    padding: 14px;
-    border-radius: 12px;
-    font-weight: bold;
+    padding: 16px;
+    border-radius: 14px;
+    font-weight: 700;
     font-size: 16px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.2s;
+    margin-top: 10px;
 }
 
-button:active { transform: scale(0.98); }
+button#add-item:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.clear-all {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.clear-all:hover {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+    background: rgba(255, 107, 107, 0.05);
+}
 
 ul { list-style: none; padding: 0; margin-top: 30px; }
 
 li {
-    background: #334155;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 12px;
+    background: var(--input-bg);
+    margin-bottom: 12px;
+    padding: 16px;
+    border-radius: 14px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    border: 1px solid transparent;
     animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+li:hover { border-color: var(--border-color); }
+
+.li-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.delete-btn {
+    background: rgba(255, 107, 107, 0.1);
+    color: var(--danger-color);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.delete-btn:hover {
+    background: var(--danger-color);
+    color: var(--bg-color);
+    transform: scale(1.05);
+}
+
+.footer-actions {
+    margin-top: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
