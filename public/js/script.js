@@ -13,7 +13,7 @@ addButton.addEventListener('click', () => {
     const itemPrice = parseFloat(priceInput.value);
 
     if (itemName === '' || isNaN(itemPrice)) {
-        alert('Please enter a valid item name and price!');
+        alert('Please enter a valid item name or price!');
         return;
     }
 
@@ -73,3 +73,29 @@ if (clearButton) {
 //     }
 // }
 // loadFromLocalStorage();
+
+const typeInput = document.querySelector('#item-type');
+
+addButton.addEventListener('click', () => {
+    const itemName = nameInput.value.trim();
+    const itemPrice = parseFloat(priceInput.value);
+    const itemType = typeInput.value;
+
+    if(itemName === '' || isNaN(itemPrice)) {
+        alert('Please enter a valid item name or price!');
+        return;
+    }
+
+    const newTransaction = {
+        id: Date.now(),
+        name: itemName,
+        price: itemPrice,
+        type: itemType
+    };
+
+    expenses.push(newTransaction);
+    nameInput.value = '';
+    priceInput.value = '';
+    renderExpenses();
+    updateTotal();
+});
