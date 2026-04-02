@@ -1,9 +1,11 @@
 let expenses = []
 let totalBalance = 0;
+let startingBalance = 0;
 
 const addButton = document.querySelector('#add-item');
 const nameInput = document.querySelector('#item-name');
 const priceInput = document.querySelector('#item-price');
+const typeInput = document.querySelector('#item-type');
 const expenseList = document.querySelector('#expense-list');
 const totalAmount = document.querySelector('#total-amount');
 const clearButton = document.querySelector('#clear-all');
@@ -11,6 +13,8 @@ const clearButton = document.querySelector('#clear-all');
 addButton.addEventListener('click', () => {
     const itemName = nameInput.value.trim();
     const itemPrice = parseFloat(priceInput.value);
+    const itemType = typeInput.value;
+
 
     if (itemName === '' || isNaN(itemPrice)) {
         alert('Please enter a valid item name or price!');
@@ -20,7 +24,8 @@ addButton.addEventListener('click', () => {
     const newExpense = {
         id: Date.now(),
         name: itemName,
-        price: itemPrice
+        price: itemPrice,
+        type: itemType
     };
 
     expenses.push(newExpense);
@@ -30,7 +35,7 @@ addButton.addEventListener('click', () => {
 
     renderExpenses();
     updateTotal();
-    });
+});
 
 function renderExpenses() {
     expenseList.innerHTML = '';
@@ -44,7 +49,15 @@ function renderExpenses() {
 }
 
 function updateTotal() {
-    totalBalance = expenses.reduce((sum, item) => sum - item.price, 0);
+    const transactionSum = expenses.reduce((acc, item) => {
+        if (item.type === 'income') {
+            return acc + item.price;
+        } else {
+            return acc - item.price;
+        }
+    }, 0);
+
+    totalBalance = startingBalance + transactionSum;
     totalAmount.textContent = totalBalance;
 }
 
@@ -59,7 +72,7 @@ if (clearButton) {
         expenses = [];
         renderExpenses();
         updateTotal();
-    })
+    });
 }
 
 // function saveToLocalStorage() {localStorage.setItem('finance-data', JSON.stringify(expenses));}
@@ -73,29 +86,3 @@ if (clearButton) {
 //     }
 // }
 // loadFromLocalStorage();
-
-const typeInput = document.querySelector('#item-type');
-
-addButton.addEventListener('click', () => {
-    const itemName = nameInput.value.trim();
-    const itemPrice = parseFloat(priceInput.value);
-    const itemType = typeInput.value;
-
-    if(itemName === '' || isNaN(itemPrice)) {
-        alert('Please enter a valid item name or price!');
-        return;
-    }
-
-    const newTransaction = {
-        id: Date.now(),
-        name: itemName,
-        price: itemPrice,
-        type: itemType
-    };
-
-    expenses.push(newTransaction);
-    nameInput.value = '';
-    priceInput.value = '';
-    renderExpenses();
-    updateTotal();
-});
