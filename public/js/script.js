@@ -35,6 +35,7 @@ addButton.addEventListener('click', () => {
 
     renderExpenses();
     updateTotal();
+    saveToLocalStorage();
 });
 
 function renderExpenses() {
@@ -65,6 +66,7 @@ function deleteExpense(id) {
     expenses = expenses.filter(item => item.id !== id);
     renderExpenses();
     updateTotal();
+    saveToLocalStorage();
 }
 
 if (clearButton) {
@@ -72,17 +74,21 @@ if (clearButton) {
         expenses = [];
         renderExpenses();
         updateTotal();
+        saveToLocalStorage();
     });
 }
 
-// function saveToLocalStorage() {localStorage.setItem('finance-data', JSON.stringify(expenses));}
-// function loadFromLocalStorage() {
-//     const savedExpenses = JSON.parse(localStorage.getItem('finance-data'));
-//
-//     if (savedExpenses) {
-//         expenses = JSON.parse(savedExpenses);
-//         renderExpenses();
-//         updateTotal();
-//     }
-// }
-// loadFromLocalStorage();
+function saveToLocalStorage() {
+    localStorage.setItem('finance-data', JSON.stringify(expenses));
+}
+
+function loadFromLocalStorage() {
+    const savedData = localStorage.getItem('finance-data');
+    if (savedData) {
+        expenses = JSON.parse(savedData);
+        renderExpenses();
+        updateTotal();
+    }
+}
+
+loadFromLocalStorage();
