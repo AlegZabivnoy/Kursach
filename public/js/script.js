@@ -9,12 +9,28 @@ const typeInput = document.querySelector('#item-type');
 const expenseList = document.querySelector('#expense-list');
 const totalAmount = document.querySelector('#total-amount');
 const clearButton = document.querySelector('#clear-all');
+const setupScreen = document.querySelector('#setup-screen');
+const initialBalanceInput = document.querySelector('#initial-balance');
+const startBtn = document.querySelector('#start-setup');
+
+startBtn.addEventListener('click', () => {
+    const val = parseFloat(initialBalanceInput.value);
+
+    if (isNaN(val)) {
+        alert("Please enter a starting balance");
+        return;
+    }
+
+    startingBalance = val;
+    localStorage.setItem('starting-balance', val);
+    setupScreen.style.display = 'none';
+    updateTotal();
+});
 
 addButton.addEventListener('click', () => {
     const itemName = nameInput.value.trim();
     const itemPrice = parseFloat(priceInput.value);
     const itemType = typeInput.value;
-
 
     if (itemName === '' || isNaN(itemPrice)) {
         alert('Please enter a valid item name or price!');
@@ -83,8 +99,13 @@ function saveToLocalStorage() {
 }
 
 function loadFromLocalStorage() {
+    const savedStartingBalance = localStorage.getItem('starting-balance');
+    if (savedStartingBalance !== null) {
+        startingBalance = parseFloat(savedStartingBalance);
+        setupScreen.style.display = 'none';
+    }
     const savedData = localStorage.getItem('finance-data');
-    if (savedData) {
+    if(savedData) {
         expenses = JSON.parse(savedData);
         renderExpenses();
         updateTotal();
