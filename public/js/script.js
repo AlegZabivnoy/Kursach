@@ -1,6 +1,5 @@
 let expenses = []
 let totalBalance = 0;
-let startingBalance = 0;
 
 const addButton = document.querySelector('#add-item');
 const nameInput = document.querySelector('#item-name');
@@ -15,16 +14,25 @@ const startBtn = document.querySelector('#start-setup');
 
 startBtn.addEventListener('click', () => {
     const val = parseFloat(initialBalanceInput.value);
+    const source = "Starting Balance";
 
     if (isNaN(val)) {
         alert("Please enter a starting balance");
         return;
     }
 
-    startingBalance = val;
-    localStorage.setItem('starting-balance', val);
+    const firstTransaction = {
+        id: Date.now(),
+        name: source,
+        price: val,
+        type: 'income'
+    };
+
+    expenses.push(firstTransaction);
     setupScreen.style.display = 'none';
+    renderExpenses();
     updateTotal();
+    saveToLocalStorage();
 });
 
 addButton.addEventListener('click', () => {
@@ -67,14 +75,10 @@ function renderExpenses() {
 
 function updateTotal() {
     const transactionSum = expenses.reduce((acc, item) => {
-        if (item.type === 'income') {
-            return acc + item.price;
-        } else {
-            return acc - item.price;
-        }
+        return item.type === 'income' ? acc + item.price : acc - item.price;
     }, 0);
 
-    totalBalance = startingBalance + transactionSum;
+    totalBalance = transactionSum;
     totalAmount.textContent = totalBalance;
 }
 
@@ -99,14 +103,15 @@ function saveToLocalStorage() {
 }
 
 function loadFromLocalStorage() {
-    const savedStartingBalance = localStorage.getItem('starting-balance');
-    if (savedStartingBalance !== null) {
-        startingBalance = parseFloat(savedStartingBalance);
-        setupScreen.style.display = 'none';
-    }
     const savedData = localStorage.getItem('finance-data');
+
     if(savedData) {
         expenses = JSON.parse(savedData);
+
+        if(expenses.length > 0) {
+            setupScreen.style.display = 'none';
+        }
+
         renderExpenses();
         updateTotal();
     }
