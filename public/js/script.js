@@ -22,10 +22,7 @@ startBtn.addEventListener('click', () => {
     }
 
     const firstTransaction = {
-        id: Date.now(),
-        name: source,
-        price: val,
-        type: 'income'
+        id: Date.now(), name: source, price: val, type: 'income'
     };
 
     expenses.push(firstTransaction);
@@ -46,10 +43,7 @@ addButton.addEventListener('click', () => {
     }
 
     const newExpense = {
-        id: Date.now(),
-        name: itemName,
-        price: itemPrice,
-        type: itemType
+        id: Date.now(), name: itemName, price: itemPrice, type: itemType
     };
 
     expenses.push(newExpense);
@@ -64,11 +58,19 @@ addButton.addEventListener('click', () => {
 
 function renderExpenses() {
     expenseList.innerHTML = '';
+
     expenses.forEach(item => {
         const li = document.createElement('li');
-        li.innerHTML = `<span>${item.name}</span> <div class="li-actions"> <strong>${item.price} UAH</strong>
+        const isIncome = item.type === 'income';
+        const colorClass = isIncome ? 'income-color' : 'expense-color';
+        const sign = isIncome ? '+' : '-'
+
+        li.innerHTML = `<span>${item.name}</span> 
+<div class="li-actions">
+<strong class="${colorClass}">${sign}${item.price} UAH</strong>
 <button class="delete-btn" onclick="deleteExpense(${item.id})">Delete</button>
 </div>`;
+
         expenseList.appendChild(li);
     });
 }
@@ -105,10 +107,10 @@ function saveToLocalStorage() {
 function loadFromLocalStorage() {
     const savedData = localStorage.getItem('finance-data');
 
-    if(savedData) {
+    if (savedData) {
         expenses = JSON.parse(savedData);
 
-        if(expenses.length > 0) {
+        if (expenses.length > 0) {
             setupScreen.style.display = 'none';
         }
 
