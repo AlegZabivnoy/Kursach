@@ -15,3 +15,20 @@ export function calculateTotal(expenses) {
         return item.type === 'income' ? acc + item.price : acc - item.price;
     }, 0);
 }
+
+export function sortExpenses(expenses, sortType) {
+    const sortedExpenses = [...expenses];
+
+    switch (sortType) {
+        case 'newest':
+            return sortedExpenses.sort((a, b) => b.id - a.id);
+        case 'oldest':
+            return sortedExpenses.sort((a, b) => a.id - b.id);
+        case 'highest':
+            return sortedExpenses.sort((a, b) => b.price - a.price);
+        case 'lowest':
+            return sortedExpenses.sort((a, b) => a.price - b.price);
+        default:
+            return sortedExpenses;
+    }
+}

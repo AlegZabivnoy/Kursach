@@ -8,7 +8,8 @@ export const DOM = {
     clearButton: document.querySelector('#clear-all'),
     setupScreen: document.querySelector('#setup-screen'),
     initialBalanceInput: document.querySelector('#initial-balance'),
-    startBtn: document.querySelector('#start-setup')
+    startBtn: document.querySelector('#start-setup'),
+    sortBy: document.querySelector('#sort-by'),
 };
 
 export function renderExpenses(expenses) {

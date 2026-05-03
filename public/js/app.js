@@ -1,13 +1,21 @@
-import { DOM, renderExpenses, updateTotalUI, toggleSetupScreen } from './ui.js';
-import { saveToLocalStorage, loadFromLocalStorage, calculateTotal } from './memory.js';
+import {DOM, renderExpenses, updateTotalUI, toggleSetupScreen} from './ui.js';
+import {saveToLocalStorage, loadFromLocalStorage, calculateTotal, sortExpenses} from './memory.js';
+
 let expenses = loadFromLocalStorage();
 
 function updateApp() {
-    renderExpenses(expenses);
+    const currentSort = DOM.sortBy.value;
+    const sortedExpenses = sortExpenses(expenses, currentSort);
+
+    renderExpenses(sortedExpenses);
     const totalBalance = calculateTotal(expenses);
     updateTotalUI(totalBalance);
     saveToLocalStorage(expenses);
 }
+
+DOM.sortBy.addEventListener('change', () => {
+    updateApp();
+});
 
 DOM.startBtn.addEventListener('click', () => {
     const val = parseFloat(DOM.initialBalanceInput.value);
