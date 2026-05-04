@@ -323,3 +323,24 @@ li:hover {
     background-color: #2a2a2a;
     color: #e0e0e0;
 }
+
+.exchange-rates {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.rate-badge {
+    background: #2a2a2a;
+    color: #a0a0a0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid #3d3d3d;
+}
+
+.rate-badge span {
+    color: #92bcea;
+    font-weight: bold;
+}

@@ -1,4 +1,4 @@
-import {DOM, renderExpenses, updateTotalUI, toggleSetupScreen} from './ui.js';
+import {DOM, renderExpenses, updateTotalUI, toggleSetupScreen, initExchangeRates} from './ui.js';
 import {saveToLocalStorage, loadFromLocalStorage, calculateTotal, sortExpenses} from './memory.js';
 
 let expenses = loadFromLocalStorage();
@@ -54,6 +54,12 @@ DOM.addButton.addEventListener('click', () => {
     DOM.priceInput.value = '';
     DOM.nameInput.focus();
     updateApp();
+
+    const tg = window.Telegram.WebApp;
+
+    if (tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0) {
+        tg.sendData(JSON.stringify(newExpense));
+    }
 });
 
 DOM.expenseList.addEventListener('click', (e) => {
@@ -76,6 +82,7 @@ function init() {
         toggleSetupScreen(false);
     }
     updateApp();
+    initExchangeRates();
 }
 
 init();

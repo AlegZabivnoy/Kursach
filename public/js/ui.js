@@ -42,3 +42,24 @@ export function toggleSetupScreen(show) {
         DOM.setupScreen.style.display = 'none';
     }
 }
+
+export async function initExchangeRates() {
+    const usdElement = document.getElementById('rate-usd');
+    const eurElement = document.getElementById('rate-eur');
+
+    try {
+        const response = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
+        const data = await response.json();
+        const usd = data.find(item => item.cc === 'USD');
+        const eur = data.find(item => item.cc === 'EUR');
+
+        if (usd && eur) {
+            usdElement.textContent = Number(usd.rate).toFixed(2); // Округляем до 2 знаков
+            eurElement.textContent = Number(eur.rate).toFixed(2);
+        }
+    } catch (error) {
+        console.error('Ошибка при загрузке курсов валют:', error);
+        usdElement.textContent = 'Error';
+        eurElement.textContent = 'Error';
+    }
+}
