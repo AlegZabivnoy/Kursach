@@ -86,3 +86,38 @@ function init() {
 }
 
 init();
+
+if (DOM.openCalcBtn) {
+    DOM.openCalcBtn.addEventListener('click', () => {
+        DOM.calcDisplay.value = '';
+        DOM.calcDialog.showModal();
+    });
+
+    DOM.calcClose.addEventListener('click', () => DOM.calcDialog.close());
+
+    DOM.calcGrid.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'BUTTON') return;
+
+        const val = e.target.textContent;
+
+        if (val === 'C') {
+            DOM.calcDisplay.value = '';
+        } else if (val === '=') {
+            try {
+                DOM.calcDisplay.value = new Function('return ' + DOM.calcDisplay.value)();
+            } catch {
+                DOM.calcDisplay.value = 'Error';
+            }
+        } else {
+            if (DOM.calcDisplay.value === 'Error') DOM.calcDisplay.value = '';
+            DOM.calcDisplay.value += val;
+        }
+    });
+
+    DOM.calcApply.addEventListener('click', () => {
+        if (DOM.calcDisplay.value && DOM.calcDisplay.value !== 'Error') {
+            DOM.priceInput.value = DOM.calcDisplay.value;
+        }
+        DOM.calcDialog.close();
+    });
+}

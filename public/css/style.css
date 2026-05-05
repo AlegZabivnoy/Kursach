@@ -344,3 +344,89 @@ li:hover {
     color: #92bcea;
     font-weight: bold;
 }
+
+.price-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.price-input-group input {
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+
+#open-calc-btn {
+    padding: 0 15px;
+    background: #2a2a2a;
+    border: 1px solid #3d3d3d;
+    border-radius: 8px;
+    color: #a0a0a0;
+    cursor: pointer;
+}
+
+.calc-modal {
+    background: #1e1e1e;
+    border: 1px solid #3d3d3d;
+    border-radius: 12px;
+    padding: 15px;
+    width: 240px;
+}
+
+.calc-modal::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+#calc-display {
+    width: 100%;
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #3d3d3d;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 20px;
+    text-align: right;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.c-btn {
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #3d3d3d;
+    padding: 10px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.calc-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.calc-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#calc-apply {
+    background: #92bcea;
+    color: #1e1e1e;
+}
+
+#calc-close {
+    background: #3d3d3d;
+    color: #a0a0a0;
+}

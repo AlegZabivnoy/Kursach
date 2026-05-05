@@ -40,7 +40,11 @@
 
     <div class="input-section">
         <input type="text" id="item-name" placeholder="Enter item name" data-key="input-name">
-        <input type="number" id="item-price" placeholder="Enter item price" data-key="input-price">
+
+        <div class="price-input-group">
+            <input type="number" id="item-price" placeholder="Enter item price">
+            <button id="open-calc-btn" type="button">Calc</button>
+        </div>
 
         <select id="item-type">
             <option value="expense">Expenses</option>
@@ -66,6 +70,32 @@
         <button id="clear-all" class="clear-all">Clear all</button>
     </div>
 </div>
+
+<dialog id="calc-dialog" class="calc-modal">
+    <input type="text" id="calc-display" readonly>
+    <div class="calc-grid">
+        <button class="c-btn">7</button>
+        <button class="c-btn">8</button>
+        <button class="c-btn">9</button>
+        <button class="c-btn">/</button>
+        <button class="c-btn">4</button>
+        <button class="c-btn">5</button>
+        <button class="c-btn">6</button>
+        <button class="c-btn">*</button>
+        <button class="c-btn">1</button>
+        <button class="c-btn">2</button>
+        <button class="c-btn">3</button>
+        <button class="c-btn">-</button>
+        <button class="c-btn">C</button>
+        <button class="c-btn">0</button>
+        <button class="c-btn">=</button>
+        <button class="c-btn">+</button>
+    </div>
+    <div class="calc-actions">
+        <button id="calc-apply">Apply</button>
+        <button id="calc-close">Close</button>
+    </div>
+</dialog>
 
 <script type="module" src="js/app.js"></script>
 

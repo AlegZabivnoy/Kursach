@@ -10,6 +10,12 @@ export const DOM = {
     initialBalanceInput: document.querySelector('#initial-balance'),
     startBtn: document.querySelector('#start-setup'),
     sortBy: document.querySelector('#sort-by'),
+    openCalcBtn: document.querySelector('#open-calc-btn'),
+    calcDialog: document.querySelector('#calc-dialog'),
+    calcDisplay: document.querySelector('#calc-display'),
+    calcGrid: document.querySelector('.calc-grid'),
+    calcApply: document.querySelector('#calc-apply'),
+    calcClose: document.querySelector('#calc-close')
 };
 
 export function renderExpenses(expenses) {
@@ -54,11 +60,11 @@ export async function initExchangeRates() {
         const eur = data.find(item => item.cc === 'EUR');
 
         if (usd && eur) {
-            usdElement.textContent = Number(usd.rate).toFixed(2); // Округляем до 2 знаков
+            usdElement.textContent = Number(usd.rate).toFixed(2);
             eurElement.textContent = Number(eur.rate).toFixed(2);
         }
     } catch (error) {
-        console.error('Ошибка при загрузке курсов валют:', error);
+        console.error('Ошибка при загрузке курсов валют', error);
         usdElement.textContent = 'Error';
         eurElement.textContent = 'Error';
     }
