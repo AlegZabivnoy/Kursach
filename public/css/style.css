@@ -273,7 +273,6 @@ li:hover {
     color: #f87171 !important;
 }
 
-
 #expense-list li {
     background: var(--input-bg);
     margin-bottom: 10px;
@@ -298,13 +297,13 @@ li:hover {
     -moz-appearance: none;
 
     background-color: #2a2a2a;
-    border: 1px solid #3a3a3a;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 8px 32px 8px 12px;
 
     font-size: 13px;
     font-family: inherit;
-    color: #e0e0e0;
+    color: var(--text-main);
     cursor: pointer;
     outline: none;
     transition: all 0.2s ease;
@@ -316,12 +315,12 @@ li:hover {
 }
 
 #sort-by:hover, #sort-by:focus {
-    border-color: #9cbfe8;
+    border-color: var(--accent-color);
 }
 
 #sort-by option {
     background-color: #2a2a2a;
-    color: #e0e0e0;
+    color: var(--text-main);
 }
 
 .exchange-rates {
@@ -333,15 +332,15 @@ li:hover {
 
 .rate-badge {
     background: #2a2a2a;
-    color: #a0a0a0;
+    color: var(--text-secondary);
     padding: 6px 12px;
     border-radius: 8px;
     font-size: 14px;
-    border: 1px solid #3d3d3d;
+    border: 1px solid var(--border-color);
 }
 
 .rate-badge span {
-    color: #92bcea;
+    color: var(--accent-color);
     font-weight: bold;
 }
 
@@ -359,15 +358,21 @@ li:hover {
 #open-calc-btn {
     padding: 0 15px;
     background: #2a2a2a;
-    border: 1px solid #3d3d3d;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    color: #a0a0a0;
+    color: var(--text-secondary);
     cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+}
+
+#open-calc-btn:hover {
+    background: var(--border-color);
+    color: var(--accent-color);
 }
 
 .calc-modal {
-    background: #1e1e1e;
-    border: 1px solid #3d3d3d;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 15px;
     width: 240px;
@@ -381,7 +386,7 @@ li:hover {
     width: 100%;
     background: #2a2a2a;
     color: white;
-    border: 1px solid #3d3d3d;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 10px;
     font-size: 20px;
@@ -400,11 +405,16 @@ li:hover {
 .c-btn {
     background: #2a2a2a;
     color: white;
-    border: 1px solid #3d3d3d;
+    border: 1px solid var(--border-color);
     padding: 10px 0;
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+    transition: background 0.2s;
+}
+
+.c-btn:hover {
+    background: var(--border-color);
 }
 
 .calc-actions {
@@ -422,11 +432,171 @@ li:hover {
 }
 
 #calc-apply {
-    background: #92bcea;
-    color: #1e1e1e;
+    background: var(--accent-color);
+    color: var(--bg-color);
 }
 
 #calc-close {
-    background: #3d3d3d;
-    color: #a0a0a0;
+    background: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.history-tab {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-right: none;
+    padding: 15px 10px;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    z-index: 900;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.history-tab:hover {
+    background: var(--border-color);
+    color: var(--accent-color);
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 950;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 320px;
+    height: 100vh;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    box-sizing: border-box;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--text-main);
+}
+
+.close-sidebar {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.close-sidebar:hover {
+    color: var(--text-main);
+}
+
+#expense-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    padding-right: 5px;
+}
+
+#expense-list::-webkit-scrollbar {
+    width: 6px;
+}
+#expense-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.export-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+#export-format {
+    flex-grow: 1;
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 32px 12px 15px;
+
+    font-size: 14px;
+    color: var(--text-main);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e0e0e0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+}
+
+#export-format:hover, #export-format:focus {
+    border-color: var(--accent-color);
+}
+
+#export-format option {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+}
+
+#export-btn {
+    background-color: var(--input-bg);
+    color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    padding: 0 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+#export-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border-color: var(--accent-color);
 }

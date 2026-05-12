@@ -5,14 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>FinanceFlow</title>
+    <title>FinanceTrack</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div id="setup-screen" class="setup-overlay">
     <div class="setup-card">
-        <h2>Welcome to FinanceFlow</h2>
+        <h2>Welcome to FinanceTrack</h2>
         <p>Lets set up starting balance</p>
         <input type="number" id="initial-balance" placeholder="Enter amount">
         <button id="start-setup">Start Tracking</button>
@@ -21,7 +21,7 @@
 
 <div class="app-container">
     <header>
-        <h1 data-key="title">FinanceFlow</h1>
+        <h1 data-key="title">FinanceTrack</h1>
         <p class="subtitle" data-key="subtitle">Smart expense tracking</p>
     </header>
 
@@ -54,21 +54,41 @@
         <button id="add-item" data-key="add-item">Add item</button>
     </div>
 
-    <div class="sort-section">
-        <select id="sort-by">
-            <option value="newest">Newest first</option>
-            <option value="oldest">Oldest first</option>
-            <option value="highest">Highest first</option>
-            <option value="lowest">Lowest first</option>
-        </select>
-    </div>
+    <button id="toggle-history" class="history-tab">Hisotry</button>
 
-    <ul id="expense-list">
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
-    </ul>
-    <div class="footer-actions">
-        <button id="clear-all" class="clear-all">Clear all</button>
-    </div>
+    <aside id="history-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Transactions</h2>
+            <button id="close-sidebar" class="close-sidebar">&times;</button>
+        </div>
+
+        <div class="sort-section">
+            <select id="sort-by">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="highest">Highest first</option>
+                <option value="lowest">Lowest first</option>
+            </select>
+        </div>
+
+        <ul id="expense-list"></ul>
+
+        <div class="footer-actions">
+            <div class="export-group">
+
+                <select id="export-format">
+                    <option value="csv">Excel(.csv)</option>
+                    <option value="txt">Text(.txt)</option>
+                </select>
+
+                <button id="export-btn" type="button">Export</button>
+                </div>
+
+            <button id="clear-all" class="clear-all">Clear all</button>
+        </div>
+    </aside>
 </div>
 
 <dialog id="calc-dialog" class="calc-modal">

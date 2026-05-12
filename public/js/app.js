@@ -121,3 +121,77 @@ if (DOM.openCalcBtn) {
         DOM.calcDialog.close();
     });
 }
+
+if (DOM.historyBtn) {
+    DOM.historyBtn.addEventListener('click', () => {
+        DOM.sidebar.classList.add('open');
+        DOM.sidebarOverlay.classList.add('active');
+    });
+
+    const closeSidebar = () => {
+        DOM.sidebar.classList.remove('open');
+        DOM.sidebarOverlay.classList.remove('active');
+    };
+
+    DOM.closeSidebarBtn.addEventListener('click', closeSidebar);
+    DOM.sidebarOverlay.addEventListener('click', closeSidebar);
+}
+
+[DOM.nameInput, DOM.priceInput].forEach(input => {
+    if (input) {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                DOM.addButton.click();
+            }
+        });
+    }
+});
+
+if(DOM.exportBtn) {
+    DOM.exportBtn.addEventListener('click', (e) => {
+        if(!expenses || expenses.length === 0) {
+            alert('History is empty. Add some transactions to export');
+            return;
+        }
+
+        const format = DOM.exportFormat.value;
+        let dataString = '';
+        let fileName = 'FinanceTrack_dataExport';
+        let mimeType = '';
+
+        if(format === 'csv') {
+            dataString = 'Type,Name,Price\n'
+            expenses.forEach(item => {
+                dataString += `${item.type},${item.name},${item.price}\n`;
+            });
+            fileName += '.csv';
+            mimeType = 'text/csv;charset=UTF-8;';
+        }
+
+        else if(format === 'txt') {
+            const header = 'FinanceTrack - Transactions\n\n';
+            const historyList = expenses.map(item => {
+                const sign = item.type === 'expense' ? '-' : '+';
+                return `${item.name}: ${sign}${item.price} UAH`;
+            }).join('\n');
+
+            dataString = header + (historyList || 'No transactions');
+            fileName += '.txt';
+            mimeType = 'text/plain;charset=UTF-8;';
+        }
+
+        const blob = new Blob([dataString], {type: mimeType});
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+
+        link.setAttribute('href', url);
+        link.setAttribute('download', fileName);
+        link.style.display = 'none';
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    })
+}

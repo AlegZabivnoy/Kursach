@@ -15,7 +15,13 @@ export const DOM = {
     calcDisplay: document.querySelector('#calc-display'),
     calcGrid: document.querySelector('.calc-grid'),
     calcApply: document.querySelector('#calc-apply'),
-    calcClose: document.querySelector('#calc-close')
+    calcClose: document.querySelector('#calc-close'),
+    historyBtn: document.querySelector('#toggle-history'),
+    sidebar: document.querySelector('#history-sidebar'),
+    closeSidebarBtn: document.querySelector('#close-sidebar'),
+    sidebarOverlay: document.querySelector('#sidebar-overlay'),
+    exportFormat: document.querySelector('#export-format'),
+    exportBtn: document.querySelector('#export-btn'),
 };
 
 export function renderExpenses(expenses) {
@@ -64,7 +70,7 @@ export async function initExchangeRates() {
             eurElement.textContent = Number(eur.rate).toFixed(2);
         }
     } catch (error) {
-        console.error('Ошибка при загрузке курсов валют', error);
+        console.error('Error during loading', error);
         usdElement.textContent = 'Error';
         eurElement.textContent = 'Error';
     }
