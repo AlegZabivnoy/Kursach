@@ -1,5 +1,5 @@
 import {DOM, renderExpenses, updateTotalUI, toggleSetupScreen, initExchangeRates} from './ui.js';
-import {saveToLocalStorage, loadFromLocalStorage, calculateTotal, sortExpenses} from './memory.js';
+import {saveToLocalStorage, loadFromLocalStorage, calculateTotal, sortExpenses, idGen} from './memory.js';
 
 let expenses = loadFromLocalStorage();
 
@@ -27,7 +27,7 @@ DOM.startBtn.addEventListener('click', () => {
     }
 
     const firstTransaction = {
-        id: Date.now(), name: source, price: val, type: 'income'
+        id: idGen.next().value, name: source, price: val, type: 'income'
     };
 
     expenses.push(firstTransaction)
@@ -46,7 +46,7 @@ DOM.addButton.addEventListener('click', () => {
     }
 
     const newExpense = {
-        id: Date.now(), name: itemName, price: itemPrice, type: itemType
+        id: idGen.next().value, name: itemName, price: itemPrice, type: itemType
     };
 
     expenses.push(newExpense);

@@ -32,3 +32,11 @@ export function sortExpenses(expenses, sortType) {
             return sortedExpenses;
     }
 }
+
+function* createIdGenerator() {
+    let id = Date.now();
+    while (true) {
+        yield id++;
+    }
+}
+export const idGen = createIdGenerator();
