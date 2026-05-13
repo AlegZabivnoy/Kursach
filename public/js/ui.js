@@ -55,7 +55,7 @@ export function toggleSetupScreen(show) {
     }
 }
 
-export async function initExchangeRates() {
+export const initExchangeRates = withLogging(async function initExchangeRatesRaw() {
     const usdElement = document.getElementById('rate-usd');
     const eurElement = document.getElementById('rate-eur');
 
@@ -69,9 +69,12 @@ export async function initExchangeRates() {
             usdElement.textContent = Number(usd.rate).toFixed(2);
             eurElement.textContent = Number(eur.rate).toFixed(2);
         }
+
+        return 'rates successfully updated';
+
     } catch (error) {
-        console.error('Error during loading', error);
         usdElement.textContent = 'Error';
         eurElement.textContent = 'Error';
+        throw error;
     }
-}
+},{ level: 'INFO', format: 'text' });
