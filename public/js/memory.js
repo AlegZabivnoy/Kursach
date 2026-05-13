@@ -1,6 +1,9 @@
-export function saveToLocalStorage(expenses) {
+export const saveToLocalStorage = withLogging(function saveToLocalStorageRaw(expenses) {
     localStorage.setItem('finance-data', JSON.stringify(expenses));
-}
+}, {
+    level: 'DEBUG',
+    format: 'json'
+});
 
 export function loadFromLocalStorage() {
     const savedData = localStorage.getItem('finance-data');
