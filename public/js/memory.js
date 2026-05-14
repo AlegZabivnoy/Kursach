@@ -1,3 +1,46 @@
+export function withLogging(fn, config = {}) {
+    const { level = 'INFO', format = 'text', transport = console.log } = config;
+
+    return function(...args) {
+        const startTime = performance.now();
+
+        const logOutput = (status, resultOrError, execTime) => {
+            if (level === 'ERROR' && status !== 'error') return;
+
+            const logEntry = {
+                timestmap: new Date().toISOString(),
+                level: status === 'error' ? 'ERROR' : level,
+                functionName: fn.name,
+                arguments: args,
+                [status === 'error' ? 'error' : 'result']: resultOrError,
+                executionTimeMs: Number(execTime.toFixed(2))
+            };
+
+            if (format === 'json') {
+                transport(JSON.stringify(logEntry));
+            } else {
+                transport(`[${logEntry.timestamp}] [${logEntry.level}] ${fn.name}() - ExecTime: ${logEntry.executionTimeMs}ms`);
+                if (status === 'error') console.error(resultOrError);
+            }
+        };
+
+        try {
+            const result = fn(...args);
+            if (result instanceof Promise) {
+                return result
+                    .then(res => { logOutput('success', res, performance.now() - startTime); return res; })
+                    .catch(err => { logOutput('error', err, performance.now() - startTime); throw err; });
+            }
+            logOutput('success', result, performance.now() - startTime);
+            return result;
+
+        } catch (error) {
+            logOutput('error', error, performance.now() - startTime);
+            throw error;
+        }
+    };
+}
+
 export const saveToLocalStorage = withLogging(function saveToLocalStorageRaw(expenses) {
     localStorage.setItem('finance-data', JSON.stringify(expenses));
 }, {

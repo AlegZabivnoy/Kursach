@@ -1,3 +1,5 @@
+import { withLogging } from './memory.js';
+
 export const DOM = {
     addButton: document.querySelector('#add-item'),
     nameInput: document.querySelector('#item-name'),
