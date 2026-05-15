@@ -54,17 +54,11 @@ DOM.addButton.addEventListener('click', () => {
     DOM.priceInput.value = '';
     DOM.nameInput.focus();
     updateApp();
-
-    const tg = window.Telegram.WebApp;
-
-    if (tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0) {
-        tg.sendData(JSON.stringify(newExpense));
-    }
 });
 
 DOM.expenseList.addEventListener('click', (e) => {
     if (e.target.classList.contains('delete-btn')) {
-        const id = Number(e.target.getAttribute('data-id')); // Достаем ID
+        const id = Number(e.target.getAttribute('data-id'));
         expenses = expenses.filter(item => item.id !== id);
         updateApp();
     }
@@ -194,4 +188,49 @@ if(DOM.exportBtn) {
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
     })
+}
+
+function switchScreen(targetId) {
+    if(DOM.screens) {
+        DOM.screens.forEach(s => s.classList.remove('active'));
+    }
+
+    if(DOM.navButtons) {
+        DOM.navButtons.forEach(b => b.classList.remove('active'));
+    }
+
+    const targetScreen = document.getElementById(targetId);
+    if (targetScreen) targetScreen.classList.add('active');
+
+    const activeBtn = document.querySelector(`[data-target="${targetId}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+}
+
+if(DOM.navButtons) {
+    DOM.navButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchScreen(btn.getAttribute('data-target'));
+        });
+    });
+}
+
+if(DOM.welcomeStrtBtn) {
+    DOM.welcomeStrtBtn.addEventListener('click', () => {
+        switchScreen('screen-tracker');
+    });
+}
+
+if(DOM.themeToggle) {
+    const savedTheme = localStorage.getItem('app-theme') || 'light';
+    if(savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        DOM.themeToggle.checked = true;
+    }
+
+    DOM.themeToggle.addEventListener('change', () => {
+        const newTheme = DOM.themeToggle.checked ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('app-theme', newTheme);
+    });
 }

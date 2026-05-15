@@ -8,7 +8,7 @@ export function withLogging(fn, config = {}) {
             if (level === 'ERROR' && status !== 'error') return;
 
             const logEntry = {
-                timestmap: new Date().toISOString(),
+                timestamp: new Date().toISOString(),
                 level: status === 'error' ? 'ERROR' : level,
                 functionName: fn.name,
                 arguments: args,

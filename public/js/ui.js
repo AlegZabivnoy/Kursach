@@ -24,6 +24,10 @@ export const DOM = {
     sidebarOverlay: document.querySelector('#sidebar-overlay'),
     exportFormat: document.querySelector('#export-format'),
     exportBtn: document.querySelector('#export-btn'),
+    navButtons: document.querySelectorAll('.nav-btn'),
+    screens: document.querySelectorAll('.screen'),
+    themeToggle: document.querySelector('#theme-toggle'),
+    welcomeStrtBtn: document.querySelector('#start-app'),
 };
 
 export function renderExpenses(expenses) {

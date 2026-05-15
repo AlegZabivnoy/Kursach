@@ -10,85 +10,110 @@
 </head>
 <body>
 
-<div id="setup-screen" class="setup-overlay">
-    <div class="setup-card">
-        <h2>Welcome to FinanceTrack</h2>
-        <p>Lets set up starting balance</p>
-        <input type="number" id="initial-balance" placeholder="Enter amount">
-        <button id="start-setup">Start Tracking</button>
-    </div>
+<nav id="main-nav">
+    <div class="logo">FinanceTrack</div>
+    <ul class="nav-links">
+        <li><a href="#" class="nav-btn active" data-target="screen-welcome">Home</a></li>
+        <li><a href="#" class="nav-btn" data-target="screen-tracker">Tracker</a></li>
+        <li><a href="#" class="nav-btn" data-target="screen-settings">Settings</a></li>
+    </ul>
+</nav>
+
+<div id="screen-welcome" class="screen active">
+    <h1>Welcome to FinanceTrack</h1>
+    <p>Control your finances with ease</p>
+    <button id="start-app">Start Tracking</button>
 </div>
 
-<div class="app-container">
-    <header>
-        <h1 data-key="title">FinanceTrack</h1>
-        <p class="subtitle" data-key="subtitle">Smart expense tracking</p>
-    </header>
+<div id="screen-tracker" class="screen">
 
-    <div class="balance-card">
-        <p><span data-key="total">Total balance</span>: <span id="total-amount">0</span> UAH</p>
-    </div>
-
-    <div class="exchange-rates">
-        <div class="rate-badge">
-            USD: <span id="rate-usd">...</span> ₴
-        </div>
-        <div class="rate-badge">
-            EUR: <span id="rate-eur">...</span> ₴
+    <div id="setup-screen" class="setup-overlay">
+        <div class="setup-card">
+            <h2>Welcome to FinanceTrack</h2>
+            <p>Lets set up starting balance</p>
+            <input type="number" id="initial-balance" placeholder="Enter amount">
+            <button id="start-setup">Start Tracking</button>
         </div>
     </div>
 
-    <div class="input-section">
-        <input type="text" id="item-name" placeholder="Enter item name" data-key="input-name">
+    <div class="app-container">
+        <header>
+            <h1 data-key="title">FinanceTrack</h1>
+            <p class="subtitle" data-key="subtitle">Smart expense tracking</p>
+        </header>
 
-        <div class="price-input-group">
-            <input type="number" id="item-price" placeholder="Enter item price">
-            <button id="open-calc-btn" type="button">Calc</button>
+        <div class="balance-card">
+            <p><span data-key="total">Total balance</span>: <span id="total-amount">0</span> UAH</p>
         </div>
 
-        <select id="item-type">
-            <option value="expense">Expenses</option>
-            <option value="income">Incomes</option>
-        </select>
-
-        <button id="add-item" data-key="add-item">Add item</button>
-    </div>
-
-    <button id="toggle-history" class="history-tab">History</button>
-
-    <div id="sidebar-overlay" class="sidebar-overlay"></div>
-
-    <aside id="history-sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h2>Transactions</h2>
-            <button id="close-sidebar" class="close-sidebar">&times;</button>
+        <div class="exchange-rates">
+            <div class="rate-badge">
+                USD: <span id="rate-usd">...</span> ₴
+            </div>
+            <div class="rate-badge">
+                EUR: <span id="rate-eur">...</span> ₴
+            </div>
         </div>
 
-        <div class="sort-section">
-            <select id="sort-by">
-                <option value="newest">Newest first</option>
-                <option value="oldest">Oldest first</option>
-                <option value="highest">Highest first</option>
-                <option value="lowest">Lowest first</option>
+        <div class="input-section">
+            <input type="text" id="item-name" placeholder="Enter item name" data-key="input-name">
+
+            <div class="price-input-group">
+                <input type="number" id="item-price" placeholder="Enter item price">
+                <button id="open-calc-btn" type="button">Calc</button>
+            </div>
+
+            <select id="item-type">
+                <option value="expense">Expenses</option>
+                <option value="income">Incomes</option>
             </select>
+
+            <button id="add-item" data-key="add-item">Add item</button>
         </div>
 
-        <ul id="expense-list"></ul>
+        <button id="toggle-history" class="history-tab">History</button>
 
-        <div class="footer-actions">
-            <div class="export-group">
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
-                <select id="export-format">
-                    <option value="csv">Excel(.csv)</option>
-                    <option value="txt">Text(.txt)</option>
+        <aside id="history-sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>Transactions</h2>
+                <button id="close-sidebar" class="close-sidebar">&times;</button>
+            </div>
+
+            <div class="sort-section">
+                <select id="sort-by">
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="highest">Highest first</option>
+                    <option value="lowest">Lowest first</option>
                 </select>
+            </div>
 
-                <button id="export-btn" type="button">Export</button>
+            <ul id="expense-list"></ul>
+
+            <div class="footer-actions">
+                <div class="export-group">
+                    <select id="export-format">
+                        <option value="csv">Excel(.csv)</option>
+                        <option value="txt">Text(.txt)</option>
+                    </select>
+                    <button id="export-btn" type="button">Export</button>
                 </div>
 
-            <button id="clear-all" class="clear-all">Clear all</button>
-        </div>
-    </aside>
+                <button id="clear-all" class="clear-all">Clear all</button>
+            </div>
+        </aside>
+    </div> </div>
+<div id="screen-settings" class="screen">
+    <h2>Settings</h2>
+    <div class="setting-item">
+        <span>Dark theme</span>
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
+    </div>
 </div>
 
 <dialog id="calc-dialog" class="calc-modal">
