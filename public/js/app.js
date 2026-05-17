@@ -28,7 +28,7 @@ DOM.startBtn.addEventListener('click', async () => {
     const firstTransaction = { name: source, price: val, type: 'income' };
     const savedData = await apiPost(firstTransaction);
 
-    expenses.push(firstTransaction)
+    expenses.push(savedData)
     toggleSetupScreen(false);
     updateApp();
 });
