@@ -41,20 +41,28 @@ export function withLogging(fn, config = {}) {
     };
 }
 
-export const saveToLocalStorage = withLogging(function saveToLocalStorageRaw(expenses) {
-    localStorage.setItem('finance-data', JSON.stringify(expenses));
-}, {
-    level: 'DEBUG',
-    format: 'json'
-});
+const API_URL = 'http://localhost:5001/api/transactions';
 
-export function loadFromLocalStorage() {
-    const savedData = localStorage.getItem('finance-data');
-    if (savedData) {
-        return JSON.parse(savedData);
-    }
-    return [];
-}
+export const apiGet = withLogging(async function apiGetRaw() {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    return data.map(item => ({ ...item, price: Number(item.price) }));
+    }, { level: 'INFO', format: 'text' });
+
+export const apiPost = withLogging(async function apiPostRaw(transaction) {
+    const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(transaction)
+    });
+    const savedItem = await res.json();
+    return { ...savedItem, price: Number(savedItem.price) };
+}, { level: 'INFO', format: 'text' });
+
+export const apiDelete = withLogging(async function apiDeleteRaw(id) {
+    await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+    return true;
+}, { level: 'INFO', format: 'text' });
 
 export function calculateTotal(expenses) {
     return expenses.reduce((acc, item) => {
@@ -78,11 +86,3 @@ export function sortExpenses(expenses, sortType) {
             return sortedExpenses;
     }
 }
-
-function* createIdGenerator() {
-    let id = Date.now();
-    while (true) {
-        yield id++;
-    }
-}
-export const idGen = createIdGenerator();

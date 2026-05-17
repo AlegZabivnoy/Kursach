@@ -1,7 +1,7 @@
 import {DOM, renderExpenses, updateTotalUI, toggleSetupScreen, initExchangeRates} from './ui.js';
-import {saveToLocalStorage, loadFromLocalStorage, calculateTotal, sortExpenses, idGen} from './memory.js';
+import {apiDelete, apiGet, apiPost, calculateTotal, sortExpenses} from './memory.js';
 
-let expenses = loadFromLocalStorage();
+let expenses = [];
 
 function updateApp() {
     const currentSort = DOM.sortBy.value;
@@ -10,14 +10,13 @@ function updateApp() {
     renderExpenses(sortedExpenses);
     const totalBalance = calculateTotal(expenses);
     updateTotalUI(totalBalance);
-    saveToLocalStorage(expenses);
 }
 
 DOM.sortBy.addEventListener('change', () => {
     updateApp();
 });
 
-DOM.startBtn.addEventListener('click', () => {
+DOM.startBtn.addEventListener('click', async () => {
     const val = parseFloat(DOM.initialBalanceInput.value);
     const source = "Starting Balance";
 
@@ -26,16 +25,15 @@ DOM.startBtn.addEventListener('click', () => {
         return;
     }
 
-    const firstTransaction = {
-        id: idGen.next().value, name: source, price: val, type: 'income'
-    };
+    const firstTransaction = { name: source, price: val, type: 'income' };
+    const savedData = await apiPost(firstTransaction);
 
     expenses.push(firstTransaction)
     toggleSetupScreen(false);
     updateApp();
 });
 
-DOM.addButton.addEventListener('click', () => {
+DOM.addButton.addEventListener('click', async () => {
     const itemName = DOM.nameInput.value.trim();
     const itemPrice = parseFloat(DOM.priceInput.value);
     const itemType = DOM.typeInput.value;
@@ -45,9 +43,8 @@ DOM.addButton.addEventListener('click', () => {
         return;
     }
 
-    const newExpense = {
-        id: idGen.next().value, name: itemName, price: itemPrice, type: itemType
-    };
+    const newExpense = { name: itemName, price: itemPrice, type: itemType };
+    const savedData = await apiPost(newExpense);
 
     expenses.push(newExpense);
     DOM.nameInput.value = '';
@@ -56,22 +53,29 @@ DOM.addButton.addEventListener('click', () => {
     updateApp();
 });
 
-DOM.expenseList.addEventListener('click', (e) => {
-    if (e.target.classList.contains('delete-btn')) {
+DOM.expenseList.addEventListener('click', async  (e) => {
+    if(e.target.classList.contains('delete-btn')) {
         const id = Number(e.target.getAttribute('data-id'));
+        await apiDelete(id);
+
         expenses = expenses.filter(item => item.id !== id);
         updateApp();
     }
 });
 
 if (DOM.clearButton) {
-    DOM.clearButton.addEventListener('click', () => {
+    DOM.clearButton.addEventListener('click', async () => {
+        for (const item of expenses) {
+            await apiDelete(item.id);
+        }
         expenses = [];
         updateApp();
     });
 }
 
-function init() {
+async function init() {
+    expenses = await apiGet();
+
     if (expenses.length > 0) {
         toggleSetupScreen(false);
     }
